@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
 
 :root {
-  --color-azul-menta: #00d4ff;
-  --color-azul-cielo: #87ceeb;
-  --color-amarillo-claro: #fffacd;
-  --color-lila-claro: #dda0dd;
+  /* Colores Neon Futurista */
+  --color-neon-cyan: #00ffff;
+  --color-neon-magenta: #ff00ff;
+  --color-neon-purple: #b300ff;
+  --color-neon-pink: #ff006e;
+  --color-neon-green: #39ff14;
+  --color-neon-yellow: #ffff00;
+  --color-neon-blue: #0080ff;
+  --color-fondo-dark: #0a0e27;
+  --color-fondo-darker: #050811;
   --color-blanco: #ffffff;
   --color-negro: #000000;
-  --color-gris-oscuro: #1a1a1a;
+  --glow-cyan: rgba(0, 255, 255, 0.6);
+  --glow-magenta: rgba(255, 0, 255, 0.6);
+  --glow-pink: rgba(255, 0, 110, 0.6);
 }
 
 * {
@@ -18,8 +26,8 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: var(--color-gris-oscuro);
-  color: var(--color-negro);
+  background-color: var(--color-fondo-dark);
+  color: var(--color-blanco);
   overflow-x: hidden;
 }
 
@@ -28,12 +36,18 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(135deg, var(--color-fondo-darker) 0%, #0f1535 50%, var(--color-fondo-dark) 100%);
 }
 
 /* Fondo animado */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-30px) rotate(5deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 10px var(--glow-cyan), 0 0 20px var(--glow-cyan); }
+  50% { text-shadow: 0 0 20px var(--glow-magenta), 0 0 40px var(--glow-magenta); }
 }
 
 .animated-background {
@@ -43,15 +57,15 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1;
-  background: linear-gradient(135deg, var(--color-gris-oscuro) 0%, #2a2a2a 100%);
+  background: linear-gradient(135deg, var(--color-fondo-darker) 0%, #1a0033 50%, var(--color-fondo-dark) 100%);
   overflow: hidden;
 }
 
 .moto-float {
   position: absolute;
   font-size: 120px;
-  animation: float 20s infinite ease-in-out;
-  opacity: 0.1;
+  animation: float 20s infinite ease-in-out, glow-pulse 4s infinite;
+  opacity: 0.15;
 }
 
 .moto-1 {
@@ -77,10 +91,11 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background: linear-gradient(90deg, var(--color-negro) 0%, var(--color-gris-oscuro) 100%);
+  background: linear-gradient(90deg, var(--color-fondo-darker) 0%, var(--color-fondo-dark) 100%);
   z-index: 1000;
-  border-bottom: 3px solid var(--color-azul-menta);
+  border-bottom: 3px solid var(--color-neon-cyan);
   padding: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
 }
 
 .navbar-container {
@@ -98,12 +113,15 @@ body {
 
 .logo {
   font-family: 'Bebas Neue', cursive;
-  background: linear-gradient(135deg, var(--color-azul-menta) 0%, var(--color-azul-cielo) 100%);
+  background: linear-gradient(135deg, var(--color-neon-cyan) 0%, var(--color-neon-magenta) 50%, var(--color-neon-pink) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 2px;
   font-size: 1.8rem;
   white-space: nowrap;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.5));
 }
 
 .nav-menu {
@@ -113,9 +131,10 @@ body {
   justify-content: center;
 }
 
+/* Botones Nav - RECTANGULARES (No se modifican) */
 .nav-link {
-  border: 2px solid var(--color-azul-menta);
-  color: var(--color-azul-menta);
+  border: 2px solid var(--color-neon-cyan);
+  color: var(--color-neon-cyan);
   background: transparent;
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -123,20 +142,45 @@ body {
   font-size: 1rem;
   font-weight: 700;
   border-radius: 5px;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.nav-link:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .nav-link:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
 .nav-link.active {
-  background: var(--color-azul-menta);
-  color: var(--color-negro);
+  background: var(--color-neon-cyan);
+  color: var(--color-fondo-dark);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
 }
 
+/* WhatsApp Button - CIRCULAR (Sin cambios en icono) */
 .whatsapp-btn {
   background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
-  border: none;
+  border: 2px solid #39ff14;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -147,32 +191,56 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.whatsapp-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(57, 255, 20, 0.2);
+  transform: translate(-50%, -50%) scale(0);
+  animation: wave-ripple 0.6s ease-out infinite;
 }
 
 .whatsapp-btn:hover {
   transform: scale(1.1) rotate(10deg);
-  box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.8);
 }
 
 /* Sección Hero */
 .hero-section {
   margin-top: 80px;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(135, 206, 235, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 50%, rgba(255, 0, 110, 0.1) 100%);
   text-align: center;
   color: var(--color-blanco);
+  border-bottom: 2px solid var(--color-neon-cyan);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
 }
 
 .hero-content h2 {
   font-size: 3rem;
   margin-bottom: 1rem;
   font-family: 'Bebas Neue', cursive;
-  color: var(--color-azul-menta);
+  background: linear-gradient(135deg, var(--color-neon-cyan) 0%, var(--color-neon-magenta) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.5));
 }
 
 .hero-content p {
   font-size: 1.5rem;
-  color: var(--color-azul-cielo);
+  color: var(--color-neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 /* Secciones */
@@ -188,38 +256,47 @@ section h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;
   font-family: 'Bebas Neue', cursive;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
 .accesorios-section {
-  background: linear-gradient(135deg, var(--color-azul-cielo) 0%, rgba(135, 206, 235, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.15) 0%, rgba(179, 0, 255, 0.15) 100%);
+  border-top: 2px solid var(--color-neon-cyan);
+  border-bottom: 2px solid var(--color-neon-purple);
 }
 
 .accesorios-section h2 {
-  color: var(--color-negro);
+  color: var(--color-neon-cyan);
 }
 
 .servicios-section {
-  background: linear-gradient(135deg, var(--color-amarillo-claro) 0%, rgba(255, 250, 205, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 0, 0.15) 0%, rgba(255, 0, 110, 0.15) 100%);
+  border-top: 2px solid var(--color-neon-yellow);
+  border-bottom: 2px solid var(--color-neon-pink);
 }
 
 .servicios-section h2 {
-  color: var(--color-negro);
+  color: var(--color-neon-yellow);
 }
 
 .ubicacion-section {
-  background: linear-gradient(135deg, var(--color-lila-claro) 0%, rgba(221, 160, 221, 0.8) 100%);
-}
-
-.contacto-section {
-  background: linear-gradient(135deg, #ff6b9d 0%, rgba(255, 107, 157, 0.8) 100%);
-}
-
-.contacto-section h2 {
-  color: var(--color-blanco);
+  background: linear-gradient(135deg, rgba(179, 0, 255, 0.15) 0%, rgba(0, 255, 255, 0.15) 100%);
+  border-top: 2px solid var(--color-neon-purple);
+  border-bottom: 2px solid var(--color-neon-cyan);
 }
 
 .ubicacion-section h2 {
-  color: var(--color-negro);
+  color: var(--color-neon-purple);
+}
+
+.contacto-section {
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.15) 0%, rgba(255, 0, 255, 0.15) 100%);
+  border-top: 2px solid var(--color-neon-pink);
+  border-bottom: 2px solid var(--color-neon-magenta);
+}
+
+.contacto-section h2 {
+  color: var(--color-neon-pink);
 }
 
 /* Grid de Accesorios y Servicios */
@@ -232,31 +309,66 @@ section h2 {
 
 .accesorio-card,
 .servicio-card {
-  background: var(--color-blanco);
-  border: 3px solid var(--color-negro);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+  border: 2px solid var(--color-neon-cyan);
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 15px;
   text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.accesorio-card::before,
+.servicio-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+  animation: wave-motion 3s ease-in-out infinite;
 }
 
 .accesorio-card:hover,
 .servicio-card:hover {
   transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+  border-color: var(--color-neon-magenta);
+}
+
+.servicios-grid .servicio-card {
+  border-color: var(--color-neon-yellow);
+}
+
+.servicios-grid .servicio-card:hover {
+  border-color: var(--color-neon-pink);
+  box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
 }
 
 .accesorio-icon,
 .servicio-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
 }
 
 .accesorio-card h3,
 .servicio-card h3 {
   font-size: 1.2rem;
-  color: var(--color-negro);
+  color: var(--color-neon-cyan);
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.servicios-grid .servicio-card h3 {
+  color: var(--color-neon-yellow);
 }
 
 /* Sección Ubicación */
@@ -267,37 +379,57 @@ section h2 {
 .ubicacion-content p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  color: var(--color-negro);
+  color: var(--color-neon-purple);
+  text-shadow: 0 0 10px rgba(179, 0, 255, 0.5);
 }
 
+/* Maps Button - CIRCULAR */
 .maps-btn {
-  background: linear-gradient(135deg, #4285f4 0%, #1967d2 100%);
-  border: none;
-  color: white;
+  background: linear-gradient(135deg, var(--color-neon-blue) 0%, var(--color-neon-cyan) 100%);
+  border: 2px solid var(--color-neon-cyan);
+  color: var(--color-fondo-dark);
   padding: 1rem 2rem;
   font-size: 1.1rem;
-  border-radius: 10px;
+  font-weight: 700;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 1rem;
   margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0, 128, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.maps-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  animation: wave-click 0.6s ease-out;
 }
 
 .maps-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(66, 133, 244, 0.3);
+  box-shadow: 0 0 40px rgba(0, 128, 255, 0.8);
 }
 
 /* Formulario de Contacto */
 .contacto-form {
   max-width: 600px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--color-neon-pink);
+  box-shadow: 0 0 30px rgba(255, 0, 110, 0.3);
 }
 
 .form-group {
@@ -309,26 +441,29 @@ section h2 {
 .form-group label {
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: var(--color-negro);
+  color: var(--color-neon-cyan);
   font-size: 1rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
 .form-group input,
 .form-group textarea {
   padding: 0.8rem;
-  border: 2px solid #ddd;
+  border: 2px solid var(--color-neon-cyan);
   border-radius: 8px;
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   transition: all 0.3s ease;
-  color: var(--color-negro);
+  color: var(--color-blanco);
+  background: rgba(0, 255, 255, 0.05);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--color-azul-menta);
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  border-color: var(--color-neon-magenta);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.1);
+  background: rgba(0, 255, 255, 0.1);
 }
 
 .form-group textarea {
@@ -336,22 +471,37 @@ section h2 {
   min-height: 120px;
 }
 
+/* Submit Button - CIRCULAR */
 .submit-btn {
-  background: linear-gradient(135deg, var(--color-azul-menta) 0%, var(--color-azul-cielo) 100%);
-  color: var(--color-negro);
-  border: none;
+  background: linear-gradient(135deg, var(--color-neon-cyan) 0%, var(--color-neon-magenta) 100%);
+  color: var(--color-fondo-dark);
+  border: 2px solid var(--color-neon-cyan);
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 700;
-  border-radius: 8px;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: wave-sweep 0.6s ease-in-out infinite;
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
 }
 
 .submit-btn:disabled {
@@ -362,31 +512,82 @@ section h2 {
 .form-success {
   margin-top: 1rem;
   padding: 1rem;
-  background-color: #d4edda;
-  color: #155724;
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.2) 0%, rgba(57, 255, 20, 0.1) 100%);
+  color: var(--color-neon-green);
+  border: 2px solid var(--color-neon-green);
   border-radius: 8px;
   text-align: center;
   font-weight: 700;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
 }
 
 .form-error {
   margin-top: 1rem;
   padding: 1rem;
-  background-color: #f8d7da;
-  color: #721c24;
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.2) 0%, rgba(255, 0, 110, 0.1) 100%);
+  color: var(--color-neon-pink);
+  border: 2px solid var(--color-neon-pink);
   border-radius: 8px;
   text-align: center;
   font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+}
+
+/* Animaciones de Onda */
+@keyframes wave-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes wave-sweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes wave-motion {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(10px, 10px) rotate(180deg);
+  }
+}
+
+@keyframes wave-click {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }
 
 /* Footer */
 .footer {
-  background: linear-gradient(90deg, var(--color-negro) 0%, var(--color-gris-oscuro) 100%);
+  background: linear-gradient(90deg, var(--color-fondo-darker) 0%, var(--color-fondo-dark) 100%);
   color: var(--color-blanco);
   text-align: center;
   padding: 2rem;
-  border-top: 3px solid var(--color-azul-menta);
+  border-top: 3px solid var(--color-neon-cyan);
   margin-top: auto;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
 /* Responsive */
