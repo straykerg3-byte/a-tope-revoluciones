@@ -16,6 +16,7 @@
   --glow-cyan: rgba(0, 255, 255, 0.6);
   --glow-magenta: rgba(255, 0, 255, 0.6);
   --glow-pink: rgba(255, 0, 110, 0.6);
+  --glow-green: rgba(57, 255, 20, 0.8);
 }
 
 * {
@@ -218,10 +219,10 @@ body {
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
 }
 
-/* WhatsApp Button - CIRCULAR (Sin cambios en icono) */
+/* WhatsApp Button - CIRCULAR CON NEON VERDE */
 .whatsapp-btn {
-  background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
-  border: 2px solid #39ff14;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border: 3px solid var(--color-neon-green);
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -232,27 +233,32 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   flex-shrink: 0;
-  box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+  box-shadow: 0 0 20px var(--glow-green), inset 0 0 10px rgba(57, 255, 20, 0.2);
   position: relative;
   overflow: hidden;
 }
 
-.whatsapp-btn::before {
+/* Efecto de brillo pulsante neon */
+.whatsapp-btn::after {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border-radius: 50%;
-  background: rgba(57, 255, 20, 0.2);
-  transform: translate(-50%, -50%) scale(0);
-  animation: wave-ripple 0.6s ease-out infinite;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, transparent 70%);
+  animation: neon-pulse-whatsapp 2s ease-in-out infinite;
+  z-index: -1;
 }
 
 .whatsapp-btn:hover {
-  transform: scale(1.1) rotate(10deg);
-  box-shadow: 0 0 30px rgba(57, 255, 20, 0.8);
+  transform: scale(1.15) rotate(10deg);
+  box-shadow: 0 0 40px var(--glow-green), inset 0 0 15px rgba(57, 255, 20, 0.3);
+}
+
+.whatsapp-btn:active {
+  transform: scale(0.95);
 }
 
 /* Sección Hero */
@@ -628,6 +634,19 @@ section h2 {
     width: 300px;
     height: 300px;
     opacity: 0;
+  }
+}
+
+/* Animación Neon Pulse para WhatsApp */
+@keyframes neon-pulse-whatsapp {
+  0% {
+    box-shadow: 0 0 20px var(--glow-green), inset 0 0 10px rgba(57, 255, 20, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--glow-green), inset 0 0 20px rgba(57, 255, 20, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 20px var(--glow-green), inset 0 0 10px rgba(57, 255, 20, 0.2);
   }
 }
 
